@@ -7,6 +7,7 @@ class Node{
 	
 	Node(int data){
 		this.data = data;
+		this.next = null;
 	}
 }
 
@@ -14,36 +15,58 @@ class Node{
 
 public class SinglyLinkedList {
 	
+	static Node head;
+	
+	//To insert at the Beginning
+	public static void insertAtBeginning(int value){
+		Node ptr = new Node(value);
+		ptr.next = head;
+		head = ptr;
+		System.out.println("Inserted "+ptr.data+"\n\n");
+	}
+	
+	
+	//To insert values at the end of the list
+		public static void insertAtEnd(int data){
+				
+			Node ptr = new Node(data);
+			Node loc;
+			
+			if (head == null)
+				head = ptr;
+			else{
+				for (loc = head ; loc.next != null ; loc = loc.next);
+				loc.next = ptr;
+			}
+
+			System.out.println("Inserted "+ptr.data+"\n\n");
+		}
+	
+
+		
+		
 	//To display the entire list
 	public static void viewList(Node head){
 		if (head == null){
-			System.out.println("List is empty!\n");
+			System.out.println("List is empty!\n\n");
 			return;
 		}
 		else{
 			Node ptr;
-			for (ptr = head ; ptr.next != null ; ptr = ptr.next)
-				System.out.print(ptr+" ");
+			System.out.println("The list is: ");
+			for (ptr = head ; ptr != null ; ptr = ptr.next)
+				System.out.print(ptr.data+" ");
+			System.out.println("\n\n");
 		}
 	}
 	
-	//To insert values at the end of the list
-	public static void insertAtEnd(Node head, int data){
-			
-		Node ptr = new Node(data);
-		Node loc;
-		
-		if (head == null)
-			head = ptr;
-		else{
-			for (loc = head ; loc.next != null ; loc = loc.next);
-			loc.next = ptr;
-		}
-	}
+	
+	
+	
+	
 	
 	//main method
 	public static void main(String args[]){
-		Node head = null;
 		Scanner sc = new Scanner(System.in);
 		while(true){
 			System.out.println("---MENU---\n");
@@ -57,20 +80,25 @@ public class SinglyLinkedList {
 			
 			switch(choice){
 			
-			case 1: System.out.println("Insert at beginning selected\n");
+			case 1: System.out.println("Enter a value: ");
+					int val = sc.nextInt();
+					insertAtBeginning(val);
 					break;
 			
 			case 2: System.out.println("Enter value: ");
 					int data = sc.nextInt();
-					insertAtEnd(head,data);
+					insertAtEnd(data);
 					break;
 			
 			case 3:	viewList(head);
-					break;
-			
+					break;	
+					
 			case 4: sc.close();
 					System.exit(0);
 					break;
+					
+			default: System.out.println("Enter a valid choice!\n\n");
+					 break;
 			}
 		}
 	}
