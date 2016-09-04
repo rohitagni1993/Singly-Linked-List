@@ -17,6 +17,14 @@ public class SinglyLinkedList {
 	
 	static Node head;
 	
+	//check if list is empty
+	public static boolean isEmpty(){
+		if (head == null)
+			return true;
+		else
+			return false;
+	}
+	
 	//To insert at the Beginning
 	public static void insertAtBeginning(int value){
 		Node ptr = new Node(value);
@@ -32,7 +40,7 @@ public class SinglyLinkedList {
 			Node ptr = new Node(data);
 			Node loc;
 			
-			if (head == null)
+			if (isEmpty())
 				head = ptr;
 			else{
 				for (loc = head ; loc.next != null ; loc = loc.next);
@@ -47,7 +55,7 @@ public class SinglyLinkedList {
 		
 	//To display the entire list
 	public static void viewList(Node head){
-		if (head == null){
+		if (isEmpty()){
 			System.out.println("List is empty!\n\n");
 			return;
 		}
@@ -60,9 +68,30 @@ public class SinglyLinkedList {
 		}
 	}
 	
+	public static Node search(int n){
+		Node ptr;
+		for (ptr = head ; ptr != null ; ptr = ptr.next){
+			if (ptr.data == n)
+				return ptr;
+		}
+		return null;
+	}
 	
-	
-	
+	public static void delete(int n){
+		Node ptr = search(n);
+		if (ptr == null){
+			System.out.println("Not Found!\n\n");
+			return;
+		}
+		else if (ptr == head)
+			head = head.next;
+		else{
+			Node loc;
+			for (loc = head ; loc.next != ptr ; loc = loc.next);
+			loc.next = ptr.next;
+		}
+		ptr = null;	
+	}
 	
 	
 	//main method
@@ -73,7 +102,8 @@ public class SinglyLinkedList {
 			System.out.println("1: Insert at beginning");
 			System.out.println("2: Insert at end");
 			System.out.println("3: View List");
-			System.out.println("4: Exit\n");
+			System.out.println("4: Delete a node");
+			System.out.println("5: Exit\n");
 			System.out.println("Please enter your choice number: ");
 			
 			int choice = sc.nextInt();
@@ -93,7 +123,17 @@ public class SinglyLinkedList {
 			case 3:	viewList(head);
 					break;	
 					
-			case 4: sc.close();
+			case 4: if (isEmpty()){
+						System.out.println("List Empty!!\n\n");
+					}
+					else{
+						System.out.println("Enter the value you want to delete: ");
+				        int num = sc.nextInt();
+				        delete(num);
+		        		break;
+					}
+			        
+			case 5: sc.close();
 					System.exit(0);
 					break;
 					
